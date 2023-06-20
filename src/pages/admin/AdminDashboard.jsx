@@ -1,18 +1,16 @@
 import React from 'react'
 import Sidebar from '../../component/admin/Sidebar';
+import { Outlet } from 'react-router-dom';
 
 export default function AdminDashboard() {
-  const handelLogOut =()=>{
-    localStorage.removeItem('token');
-    window.location.href = '/admin/login';
-  }
+
     return (
     <div> 
       <Sidebar />
+      <div className=' mx-28'>
+      <Outlet  />
 
- 
-        <button onClick={handelLogOut} className='bg-red-400 rounded-lg p-2'>logOut
-        </button>
+      </div>
     </div>
   )
 }
