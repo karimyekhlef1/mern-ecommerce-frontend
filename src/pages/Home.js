@@ -3,45 +3,28 @@ import axios from 'axios';
 
 function Home() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const cancelToken = useRef(null);
+
 
   useEffect(() => {
-    cancelToken.current = axios.CancelToken.source();
 
     const fetchProducts = async () => {
       try {
-        setLoading(true);
-        const response = await axios.get('http://192.168.1.3:8080/api/product/all', {
-          cancelToken: cancelToken.current.token
+        const response = await axios.get('http://192.168.1.9:8080/api/product/all', {
+
         });
+        console.log(response)
         setProducts(response.data);
-        setLoading(false);
       } catch (error) {
         if (!axios.isCancel(error)) {
-          setError(error.message);
-          setLoading(false);
+
         }
       }
     };
 
     fetchProducts();
-
-    return () => {
-      cancelToken.current.cancel('Component unmounted');
-    };
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
   }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-  console.log(products.data)
-
+  )
+  // console.log(products)
   return (
     <div className="w-full h-screen bg-black text-white">
       <h1>Products:</h1>
