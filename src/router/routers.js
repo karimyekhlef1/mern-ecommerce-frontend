@@ -6,6 +6,7 @@ import AdminDashboard from '../pages/admin/AdminDashboard';
 import Orders from '../component/admin/Orders';
 import CreatProduct from '../component/admin/CreatProduct';
 import Products from '../component/admin/Products';
+import OrderNow from '../component/order/OrderNow';
 
 const isLoggedIn= localStorage.getItem('token')
 console.log(isLoggedIn)
@@ -22,9 +23,14 @@ const routes = createBrowserRouter([
     element: <Home />,
     exact: true,
   },
+
   {
     path: '/home',
     element: <Home />,
+  },
+  {
+    path: 'order-now/:productId',
+    element: <OrderNow />,
   },
   {
     path: '/admin/login',

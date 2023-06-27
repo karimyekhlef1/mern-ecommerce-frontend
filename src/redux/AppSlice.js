@@ -4,7 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const Slice = createSlice({
   name: "Slice",
   initialState: {
-    isLoggedIn:false
+    isLoggedIn:false , 
+    baseUrl: 'http://localhost:8080/api',
+
 
   },
   reducers: {
