@@ -22,7 +22,6 @@ export default function OrderCard(props) {
           console.error('Error occurred while deleting the order:', error);
         }
       };
-    
   return (
     <div className="bg-gray-200 rounded-lg border-white  m-5 flex justify-between">
     <div>
