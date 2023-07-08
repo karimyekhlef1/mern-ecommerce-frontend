@@ -45,7 +45,6 @@ export default function OrderCard(props) {
         Delet              
       </button>
     </div>
-    <DialogConfirmation />
   </div>
   )
 }

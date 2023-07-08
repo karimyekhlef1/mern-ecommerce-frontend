@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Loading from '../component/Loading';
 import Error from '../component/Error';
+import DialogConfirmation from '../component/dialogs/DialogConfirmation';
 
 function Home() {
   const baseUrl = useSelector((state) => state.Slice.baseUrl);
@@ -24,7 +25,7 @@ function Home() {
   useEffect(() => {
 
     fetchProducts();
-  }, [fetchProducts]);
+  }, []);
 
   const handleOrder = (productId) => {
   };
@@ -61,6 +62,7 @@ function Home() {
           )}
         </div>
       )}
+      
     </div>
   );
 }

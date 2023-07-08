@@ -7,7 +7,7 @@ import Orders from '../component/admin/Orders';
 import CreatProduct from '../component/admin/CreatProduct';
 import Products from '../component/admin/Products';
 import OrderNow from '../component/order/OrderNow';
-
+import Test from '../pages/Test';
 const isLoggedIn= localStorage.getItem('token')
 console.log(isLoggedIn)
 
@@ -23,7 +23,11 @@ const routes = createBrowserRouter([
     element: <Home />,
     exact: true,
   },
-
+  {
+    path: '/test',
+    element: <Test />,
+    exact: true,
+  },
   {
     path: '/home',
     element: <Home />,
