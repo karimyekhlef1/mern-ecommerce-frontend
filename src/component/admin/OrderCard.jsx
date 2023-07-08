@@ -1,13 +1,13 @@
 import React from 'react'
 import axios from 'axios';
 import { useSelector } from "react-redux";
+import DialogConfirmation from '../dialogs/DialogConfirmation';
 
 export default function OrderCard(props) {
     const baseUrl = useSelector((state) => state.Slice.baseUrl);
     const order = props.order
     const token = localStorage.getItem('token')
      const handleDeleteOrder = async () => {
-        console.log(order._id)
         try {
       const response = await axios.delete(`${baseUrl}/order/delet`, {
         headers: {
@@ -45,6 +45,7 @@ export default function OrderCard(props) {
         Delet              
       </button>
     </div>
+    <DialogConfirmation />
   </div>
   )
 }

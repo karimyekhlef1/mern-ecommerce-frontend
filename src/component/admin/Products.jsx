@@ -1,37 +1,65 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProductCard from '../ProductCard';
-
+import { useSelector } from 'react-redux';
+ import Error from '../Error';
+import Loading from '../Loading';
 function Products() {
+  const baseUrl = useSelector((state) => state.Slice.baseUrl);
   const [products, setProducts] = useState([]);
+  const [error, setError] = useState({ value: false, msg: null });
+  const [isLoading, setIsLoading] = useState(true);
+  
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/product/all`);
+      setProducts(response.data.data);
+    } catch (error) {
+      setError({ value: true, msg: error.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('http://192.168.1.3:8080/api/product/all');
-        setProducts(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
     fetchProducts();
   }, []);
 
+  const handleOrder = (productId) => {
+  };
 
-  useEffect(() => {
-    console.log('Response has changed:', products);
-  }, [products]);
-
-  console.log(products)
   return (
-    <div>
+    <div className="w-full h-screen">
       <h1>Products:</h1>
-      <div className='flex flex-col w-full p-2'>
-        {products?.data?.map(product =>  
-          <ProductCard  product ={product}
-        />)}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : error.value ? (
+        <Error msg={error.msg} />
+      ) : (
+        <div className="flex flex-grow">
+          {products.length > 0 ? (
+            products.map((product) => (
+              <div
+                className="bg-gray-200 rounded-xl border border-white w-1/4"
+                key={product._id}
+              >
+                <h3>{product.title}</h3>
+                <p>{product.description}</p>
+                <div>
+                  <button
+                    className="bg-blue-500"
+                    onClick={() => handleOrder(product._id)}
+                  >
+                    Order Now
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No products found.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

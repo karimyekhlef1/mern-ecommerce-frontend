@@ -10,8 +10,9 @@ const AdminLogin = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://192.168.1.9:8080/api/user/login', { email, password });
+      const response = await axios.post('http://localhost:8080/api/user/login', { email, password });
       console.log(response)
+      
 
       // Save the token in localStorage
       localStorage.setItem('token', response.data.accessToken);
