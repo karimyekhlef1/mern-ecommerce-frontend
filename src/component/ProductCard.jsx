@@ -26,7 +26,7 @@ export default function ProductCard(props) {
           <div className='bg-gray-300 w-full m-2 p-2 rounded-lg'>
           <div className='flex justify-between items-center '>
            <div key={product._id}>
-            <h3>{product.titel}</h3>
+            <h3>{product.title}</h3>
             <p>{product.description}</p>
           </div>
           <div >

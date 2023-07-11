@@ -1,19 +1,30 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState , useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { openModalDialog , closeModalDialog  , handelreturnDialogconfirmation} from '../../redux/AppSlice';
+import { useSelector } from 'react-redux';
+function DialogConfirmation({ title , content }) {
+  const dispatch = useDispatch()
 
-function DialogConfirmation({ value , msg }) {
-  let [isOpen, setIsOpen] = useState(value);
+  const isOpenDialog = useSelector((state) => state.Slice.isOpenDialog);
+  // const returnDialogconfirmation = useSelector((state) => state.Slice.returnDialogconfirmation);
 
-  function closeModal() {
-    setIsOpen(false)
+  const handelClickOK = ()=>{
+    dispatch (closeModalDialog());
+    dispatch(handelreturnDialogconfirmation(true))
   }
-  function openModal() {
-    setIsOpen(true)
+
+  const handelClickClose = ()=>{
+    dispatch (closeModalDialog());
+    dispatch(handelreturnDialogconfirmation(false))
+
   }
+ 
+ 
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-    <Dialog as="div" className="relative z-10" onClose={closeModal}>
+    <Transition appear show={isOpenDialog} as={Fragment}>
+    <Dialog as="div" className="relative z-10" onClose={handelClickClose}>
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"
@@ -42,22 +53,28 @@ function DialogConfirmation({ value , msg }) {
                 as="h3"
                 className="text-lg font-medium leading-6 text-gray-900"
               >
-                Payment successful
+                 {title}
               </Dialog.Title>
               <div className="mt-2">
                 <p className="text-sm text-gray-500">
-                  Your payment has been successfully submitted. We’ve sent
-                  you an email with all of the details of your order.
+                {content}
                 </p>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-4 flex justify-between">
                 <button
                   type="button"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  onClick={closeModal}
+                  className="inline-flex justify-center rounded-md border border-transparent bg-red-200 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-red-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  onClick={handelClickClose}
                 >
-                  Got it, thanks!
+                 close
+                </button>
+                <button
+                  type="button"
+                  className="inline-flex justify-center rounded-md border border-transparent bg-blue-200 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  onClick={handelClickOK}
+                >
+                 ok 
                 </button>
               </div>
             </Dialog.Panel>

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import DialogConfirmation from '../dialogs/DialogConfirmation';
-
-import { useSelector } from 'react-redux';
+import { openModalDialog } from '../../redux/AppSlice';
+import { useSelector , useDispatch } from 'react-redux';
 const CreatProduct = () => {
+  const dispatch = useDispatch()
   const baseUrl = useSelector((state) => state.Slice.baseUrl);
+  const returnDialogconfirmation = useSelector((state) => state.Slice.returnDialogconfirmation);
+  const isOpenDialog = useSelector((state) => state.Slice.isOpenDialog);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [showDialog, setShowDialog] = useState(false);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -20,6 +22,9 @@ const CreatProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(openModalDialog())
+
+if(returnDialogconfirmation && !isOpenDialog){
 
     try {
       const token = localStorage.getItem('token');
@@ -34,20 +39,26 @@ const CreatProduct = () => {
         },
       });
 
-      // Handle the response as needed
-
-      // Reset the form
       setTitle('');
       setDescription('');
-      setShowDialog(true);
-
     } catch (error) {
-      // Handle the error
+
     }
+}
+// else{
+//   setTitle('');
+//   setDescription('');
+  
+// }
   };
+  const msg = {
+    title:"add product ", 
+    div: "are you sure "
+  }
 
 
   return (
+    <>
     <div>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
         <div className="mb-4">
@@ -80,8 +91,10 @@ const CreatProduct = () => {
           Add Product
         </button>
       </form>
-
     </div>
+    <DialogConfirmation title="title" content='content'/>
+
+    </>
   );
 };
 
